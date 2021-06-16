@@ -1,3 +1,4 @@
+using System.Linq;
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -24,17 +25,17 @@ namespace API.Controllers
         [HttpGet("not-found")]
         public ActionResult<AppUser> GetNotFound()
         {
-            var thing = _context.Users.FindAsync(-1);
+            var thing = _context.Users.Find(-1);
             
-            return Ok(thing);
+            return NotFound(thing);
         }
 
         [HttpGet("server-error")]
-        public ActionResult<string> GetServerError()
+        public ActionResult<AppUser> GetServerError()
         {
-            var thing = _context.Users.FindAsync(-1);
+            var thing = _context.Users.SingleOrDefault(x => x.Id == -1);
             
-            var thingToReturn = thing.ToString();
+            var thingToReturn = thing.Username.ToString();
             return Ok(thingToReturn);
         }
 

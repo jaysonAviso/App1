@@ -30,12 +30,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 throw modalStateError.flat();
               } else {
-                this.toastr.error(error.statusCode, error.status);
+                this.toastr.error(error.statusText, error.status);
               }
               break;
 
             case 401:
-              this.toastr.error(error.statusCode, error.status);
+              this.toastr.error(error.statusText, error.status);
               break;
 
             case 404:
