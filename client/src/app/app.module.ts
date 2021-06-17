@@ -19,6 +19,13 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -32,7 +39,9 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
     MemberDetailComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    TestErrorsComponent
+    TestErrorsComponent,
+    MemberCardComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +52,16 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
-    })
+    }),
+    TabsModule.forRoot(),
+    NgxGalleryModule,
+    NgxSpinnerModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
